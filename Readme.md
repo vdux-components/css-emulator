@@ -23,6 +23,7 @@ Since it's annoying and not very self-documenting to use `<CSSEmulator/>` everyw
 
 ## API - props
 
+  * `tag` - The HTML tag or component that you want to render (e.g. `button`)
   * `hoverStyle` - Styles to be applied on hover
   * `hoverClass` - Class to be applied on hover
   * `activeStyle` - Styles to be applied when the component is 'active' (e.g. when a button is pressed)
