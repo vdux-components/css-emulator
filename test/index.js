@@ -17,16 +17,14 @@ test('hover should work', t => {
   const off = subscribe(a => a)
   let node
 
-  node = render(<CSSEmulator hoverStyle={{border: '1px solid'}} />)
-  t.equal(node.style.border, '')
-
+  t.plan(2)
+  node = render(<CSSEmulator onHoverChange={hover => t.ok(hover)} />)
   trigger(node, 'mouseenter')
-  node = render(<CSSEmulator hoverStyle={{border: '1px solid'}} />)
-  t.equal(node.style.border, '1px solid')
+  render(<CSSEmulator onHoverChange={hover => t.ok(hover)} />)
 
+  node = render(<CSSEmulator onHoverChange={hover => t.notOk(hover)} />)
   trigger(node, 'mouseleave')
-  node = render(<CSSEmulator hoverStyle={{border: '1px solid'}} />)
-  t.equal(node.style.border, '')
+  node = render(<CSSEmulator onHoverChange={hover => t.notOk(hover)} />)
 
   off()
   t.end()
@@ -37,16 +35,14 @@ test('active should work', t => {
   const off = subscribe(a => a)
   let node
 
-  node = render(<CSSEmulator activeStyle={{border: '1px solid'}} />)
-  t.equal(node.style.border, '')
-
+  t.plan(2)
+  node = render(<CSSEmulator onActiveChange={active => t.ok(active)} />)
   trigger(node, 'mousedown')
-  node = render(<CSSEmulator activeStyle={{border: '1px solid'}} />)
-  t.equal(node.style.border, '1px solid')
+  node = render(<CSSEmulator onActiveChange={active => t.ok(active)} />)
 
+  node = render(<CSSEmulator onActiveChange={active => t.notOk(active)} />)
   trigger(node, 'mouseup', {bubbles: true})
-  node = render(<CSSEmulator activeStyle={{border: '1px solid'}} />)
-  t.equal(node.style.border, '')
+  node = render(<CSSEmulator onActiveChange={active => t.notOk(active)} />)
 
   off()
   t.end()
@@ -57,16 +53,14 @@ test('focus should work', t => {
   const off = subscribe(a => a)
   let node
 
-  node = render(<CSSEmulator focusStyle={{border: '1px solid'}} />)
-  t.equal(node.style.border, '')
-
+  t.plan(2)
+  node = render(<CSSEmulator onFocusChange={focus => t.ok(focus)} />)
   trigger(node, 'focus')
-  node = render(<CSSEmulator focusStyle={{border: '1px solid'}} />)
-  t.equal(node.style.border, '1px solid')
+  node = render(<CSSEmulator onFocusChange={focus => t.ok(focus)} />)
 
+  node = render(<CSSEmulator onFocusChange={focus => t.notOk(focus)} />)
   trigger(node, 'blur')
-  node = render(<CSSEmulator focusStyle={{border: '1px solid'}} />)
-  t.equal(node.style.border, '')
+  node = render(<CSSEmulator onFocusChange={focus => t.notOk(focus)} />)
 
   off()
   t.end()
@@ -77,9 +71,10 @@ test('should still allow normal event handlers to work', t => {
   const off = subscribe(a => a)
   let node
 
-  node = render(<CSSEmulator onFocus={() => t.pass()} focusStyle={{border: '1px solid'}} />)
-  t.plan(1)
+  t.plan(2)
+  node = render(<CSSEmulator onFocus={() => t.pass()} onFocusChange={focus => t.ok(focus)} />)
   trigger(node, 'focus')
+  node = render(<CSSEmulator onFocus={() => t.pass()} onFocusChange={focus => t.ok(focus)} />)
 
   off()
   t.end()

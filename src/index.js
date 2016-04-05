@@ -13,43 +13,28 @@ import omit from '@f/omit'
  * Constants
  */
 
-const filterProps = omit(['hoverStyle', 'hoverClass', 'activeStyle', 'activeClass', 'focusStyle', 'focusClass', 'style', 'class'])
+const filterProps = omit(['onHoverChange', 'onFocusChange', 'onActiveChange', 'tag'])
 
 /**
  * Css Emulator
  */
 
 function render ({props, children, state, local}) {
-  const {hoverStyle, hoverClass, activeStyle, activeClass, focusStyle, focusClass, tag: Tag = 'div', style} = props
-  const elemProps = {style, class: props.class}
+  const {onHoverChange, onFocusChange, onActiveChange, tag: Tag = 'div'} = props
+  const elemProps = {}
 
-  if (hoverStyle || hoverClass) {
+  if (onHoverChange) {
     elemProps.onMouseEnter = handler(props.onMouseEnter, local(mouseEnter))
     elemProps.onMouseLeave = handler(local(mouseLeave))
   }
 
-  if (activeStyle || activeClass) {
+  if (onActiveChange) {
     elemProps.onMouseDown = handler(props.onMouseDown, local(mouseDown))
   }
 
-  if (focusStyle || focusClass) {
+  if (onFocusChange) {
     elemProps.onFocus = handler(props.onFocus, local(focus))
     elemProps.onBlur = handler(props.onBlur, local(blur))
-  }
-
-  if (state.active) {
-    if (activeStyle) elemProps.style = {...elemProps.style, ...activeStyle}
-    if (activeClass) elemProps.class = [elemProps.class, activeClass]
-  }
-
-  if (state.hover) {
-    if (hoverStyle) elemProps.style = {...elemProps.style, ...hoverStyle}
-    if (hoverClass) elemProps.class = [elemProps.class, hoverClass]
-  }
-
-  if (state.focus) {
-    if (focusStyle) elemProps.style = {...elemProps.style, ...focusStyle}
-    if (focusClass) elemProps.class = [elemProps.class, focusClass]
   }
 
   let node
@@ -60,6 +45,27 @@ function render ({props, children, state, local}) {
       {state.active && <Body onMouseUp={local(mouseUp)} />}
     </Tag>
   )
+}
+
+function onUpdate (prev, next) {
+  // Don't do this stuff if our internal state hasn't changed
+  if (prev.state !== next.state) {
+    const result = []
+
+    if (prev.state.active !== next.state.active && next.props.onActiveChange) {
+      result.push(next.props.onActiveChange(next.state.active))
+    }
+
+    if (prev.state.hover !== next.state.hover && next.props.onHoverChange) {
+      result.push(next.props.onHoverChange(next.state.hover))
+    }
+
+    if (prev.state.focus !== next.state.focus && next.props.onFocusChange) {
+      result.push(next.props.onFocusChange(next.state.focus))
+    }
+
+    return result
+  }
 }
 
 /**
@@ -108,5 +114,6 @@ function handler (a, b) {
 
 export default {
   render,
+  onUpdate,
   reducer
 }
