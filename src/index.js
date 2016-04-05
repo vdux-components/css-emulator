@@ -72,12 +72,13 @@ function onUpdate (prev, next) {
  * Actions
  */
 
-const mouseEnter = createAction('<CSSEmulator/>: mouseEnter')
-const mouseLeave = createAction('<CSSEmulator/>: mouseLeave')
-const mouseDown = createAction('<CSSEmulator/>: mouseDown')
-const mouseUp = createAction('<CSSEmulator/>: mouseUp')
-const focus = createAction('<CSSEmulator/>: focus')
-const blur = createAction('<CSSEmulator/>: blur')
+const metaCreator = () => ({logLevel: 'debug'})
+const mouseEnter = createAction('<CSSEmulator/>: mouseEnter', null, metaCreator)
+const mouseLeave = createAction('<CSSEmulator/>: mouseLeave', null, metaCreator)
+const mouseDown = createAction('<CSSEmulator/>: mouseDown', null, metaCreator)
+const mouseUp = createAction('<CSSEmulator/>: mouseUp', null, metaCreator)
+const focus = createAction('<CSSEmulator/>: focus', null, metaCreator)
+const blur = createAction('<CSSEmulator/>: blur', null, metaCreator)
 
 function checkHover (local, regionElement, child) {
   if (!contains(regionElement, child)) {
