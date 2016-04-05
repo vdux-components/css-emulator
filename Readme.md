@@ -19,7 +19,7 @@ function render () {
 }
 ```
 
-Since it's annoying and not very self-documenting to use `<CSSEmulator/>` everywhere, you'll probably want to use this as a low-level component and build other things on top of it. Like [vdux-ui](https://github.com/vdux-components/vdux-ui).
+Since it's annoying and not very self-documenting to use `<CSSEmulator/>` everywhere, you'll probably want to use this as a low-level component and build other things on top of it. Like [vdux-ui](https://github.com/vdux-components/ui).
 
 ## API - props
 
