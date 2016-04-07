@@ -56,7 +56,7 @@ function render ({props, children, state, local}) {
     <Tag ref={_node => node = _node} {...filterProps(props)} {...elemProps}>
       {children}
       {state.hover && <Body onMouseMove={e => checkHover(local, node, e.target)} />}
-      {state.hover && <Delay time={lingerDelay} onEnd={local(linger)} />}
+      {state.hover && onLingerChange) && <Delay time={lingerDelay} onEnd={local(linger)} />}
       {state.active && <Body onMouseUp={local(mouseUp)} />}
     </Tag>
   )
