@@ -66,6 +66,27 @@ test('focus should work', t => {
   t.end()
 })
 
+test('linger should work', t => {
+  const {render, subscribe} = vdux()
+  const off = subscribe(a => a)
+  let node
+
+  t.plan(2)
+  node = render(<CSSEmulator onLingerChange={linger => t.notOk(linger)} />)
+  trigger(node, 'mouseenter')
+  node = render(<CSSEmulator onLingerChange={linger => t.notOk(linger)} />)
+
+  setTimeout(() => {
+    node = render(<CSSEmulator onLingerChange={linger => t.ok(linger)} />)
+    trigger(node, 'mouseleave')
+    node = render(<CSSEmulator onLingerChange={linger => t.notOk(linger)} />)
+
+    off()
+    t.end()
+  }, 500)
+})
+
+
 test('should still allow normal event handlers to work', t => {
   const {render, subscribe} = vdux()
   const off = subscribe(a => a)

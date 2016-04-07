@@ -25,6 +25,12 @@ function render ({local}) {
   * `onHoverChange` - Receives a boolean for hover state
   * `onActiveChange` - Receives a bool for active state
   * `onFocusChange` - Receives a bool for focus state
+  * `onLingerChange` - Receives a bool for linger state
+  * `lingerDelay` - How long to wait to trigger the `lingerChange` event. Defaults to 500 milliseconds.
+
+## Linger state
+
+Sometimes you want to do something only if the user hovers for a short period of time (i.e. not immediately). `onLingerChange` provides this primitive for you, and allows you to do something in response to the mouse 'lingering' over an element.
 
 ## Why can't I just use `onMouseEnter/onMouseLeave`?
 
