@@ -17,7 +17,7 @@
     "@f/handle-actions": "^1.1.1",
     "@f/omit": "^2.2.3",
     "@f/trigger-event": "^1.0.2",
-    "vdux-delay": "^1.0.5"
+    "vdux-delay": "^1.0.6"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
