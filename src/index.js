@@ -5,9 +5,9 @@
 import handleActions from '@f/handle-actions'
 import createAction from '@f/create-action'
 import contains from '@f/contains-element'
+import Document from 'vdux/document'
 import element from 'vdux/element'
 import Delay from 'vdux-delay'
-import Body from 'vdux/body'
 import omit from '@f/omit'
 
 /**
@@ -55,9 +55,9 @@ function render ({props, children, state, local}) {
   return (
     <Tag ref={_node => node = _node} {...filterProps(props)} {...elemProps}>
       {children}
-      {state.hover && <Body onMouseMove={e => checkHover(local, node, e.target)} />}
+      {state.hover && <Document onMouseMove={e => checkHover(local, node, e.target)} />}
       {(state.hover && onLingerChange) && <Delay time={lingerDelay} onEnd={local(linger)} />}
-      {state.active && <Body onMouseUp={local(mouseUp)} />}
+      {state.active && <Document onMouseUp={local(mouseUp)} />}
     </Tag>
   )
 }
